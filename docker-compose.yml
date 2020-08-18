@@ -18,7 +18,7 @@ services:
   react:
     build: ./frontend
     container_name: dev-react
-    command: npm start
+    command: sh -c "npm install && npm start"
     ports:
       - 3001:3000
     env_file:
@@ -29,8 +29,11 @@ services:
     volumes:
       - ./frontend/:/srv/app
       - /srv/app/node_modules
+      - wasm:/srv/app/src/rust/
     depends_on:
       - django
+      - rust
+    restart: on-failure
   db:
     image: postgres:12.0-alpine
     container_name: dev-db
@@ -52,8 +55,14 @@ services:
       - django
       - react
       - db
-
+  rust:
+    build: ./rust
+    command: sh -c 'cargo watch -i .gitignore -i "pkg/*" -s "wasm-pack build --out-dir /srv/app/rust/pkg"'
+    volumes:
+      - wasm:/srv/app/rust
+    restart: on-failure
 volumes:
+  wasm:
   postgres_data:
   media:
   static:

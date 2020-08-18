@@ -1,0 +1,4 @@
+rust/target
+*/.vscode
+*/node_modules
+*/pkg

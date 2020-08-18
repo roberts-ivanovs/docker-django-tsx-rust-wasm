@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import logo from './logo.svg';
 import './App.scss';
 
-function App() {
+interface Props {
+  wasm: typeof import('wasm-app');
+}
+
+function App({ wasm }: Props): ReactElement {
+  wasm.greet();
   return (
     <div className="App">
       <header className="App-header">
