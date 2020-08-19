@@ -1,12 +1,10 @@
-# docker-django-react
-
-## WORK IN PROGRESS
+# docker-django-drw-react-tsx-rust-webgl
 
 A slightly opinionated local dev full stack template using docker-compose with Django backend and React frontend; all served behind NGINX. Keeping the full stack in one repo for ease of use. Composed of ideas from multiple tutorials, forum threads and official docs. Nothing original here.
 
 ## Main Frameworks/Libraries/Packages
 
-Please see requirements.txt and package.json for full details.
+Please see requirements.txt, package.json, Cargo.toml for full details.
 
 Django
 
@@ -20,6 +18,10 @@ React
 - Create React App
 - Node dev server via Docker LTS alpine image
 - Hot reload
+- TypeScript/ESlint with very opinionated rules
+- SASS support
+- WebAssembly support
+- Integration with the Rust-Wasm module
 
 Postgress
 
@@ -30,6 +32,12 @@ Ngnix
 - Docker stable alpine
 - See conf for details. Serves Django's static and media files as well.
 
+Rust
+
+- Compilation on code change straight to WASM with all type definitions
+- Rust 2018 edition
+- wasm-bindgen for WEB APIs
+
 ## Notes
 
 Django
@@ -37,6 +45,10 @@ Django
 - One app created/installed called core
 - Custom user stubbed out in the Core app. No additional fields. Just a blank class that inherets AbstractUser. core.User is assigned as AUTH_USER_MODEL
 - SimpleJWT is installed but not used.
+
+React
+
+- To mark a css file as a module use the syntax of `import style from "styleFile.module.scss"`
 
 ## Fork or Template
 
@@ -108,8 +120,9 @@ $> docker exec -it <container-name> sh
 | dev-react  | react   | 3001      | 3000        |
 | dev-db     | db      | 5432      | 5432        |
 | dev-nginx  | nginx   | 8080      | 80          |
+| dev-rust   | rust    |           |             |
 
-### Why NGINX for local dev?
+### Why NGINX for local dev
 
 I can barely spell CORS, let alone decode all of the issues trying to get Cross-Origin Resource Sharing to work. Using NGINX to redirect/proxy requests/responses to/from the correct container/service/ports helps make your browser happy. And it simulates real world infrastructure as a bonus. This is an idea I picked up from the good folks at testdriven.io and I liked it enough to make it work(I think). So...
 
