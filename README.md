@@ -124,6 +124,21 @@ $> docker exec -it <container-name> sh
 
 ### Why NGINX for local dev
 
-I can barely spell CORS, let alone decode all of the issues trying to get Cross-Origin Resource Sharing to work. Using NGINX to redirect/proxy requests/responses to/from the correct container/service/ports helps make your browser happy. And it simulates real world infrastructure as a bonus. This is an idea I picked up from the good folks at testdriven.io and I liked it enough to make it work(I think). So...
+Please make all requests from your browser through http://localhost:8080 and
+NGINX will happily redirect the request and proxy all your services so your
+browser thinks it's all one and the same protocol/domain/port == CORS bliss.
 
-Please make all requests from your browser through http://localhost:8080 and NGINX will happily redirect the request and proxy all your services so your browser thinks it's all one and the same protocol/domain/port == CORS bliss.
+
+## How to start developing in VSCode
+
+1. Install the
+   [Docker extensions](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
+   and
+   [Remote container development extensions](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+2. Install [Docker](https://docs.docker.com/engine/install/) and
+   [docker-compose](https://docs.docker.com/compose/install/)
+3. Start the containers with `docker-compose up`
+4. Open the Docker extension sidebar
+5. Right click on the container you want to do development in
+6. Select `Attach Visual Studio Code`
+   ![Tutorial on what to click](docs/vscode-docker-remote-tut.png)
